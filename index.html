@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚠️ ChromeOS Critical Security Warning ⚠️</title>
+    <title>🚨 ChromeOS Critical Warning 🚨</title>
     <style>
         * { box-sizing: border-box; }
         body {
-            background-color: #202124; /* Google Chrome Dark Mode Background */
+            background-color: #202124;
             color: #f1f3f4;
             font-family: 'Roboto', sans-serif, Arial;
             margin: 0;
@@ -18,131 +18,91 @@
             height: 100vh;
         }
 
-        /* Full Screen In-And-Out Scale Effect - Starts immediately on load */
+        /* Continuous in-and-out full screen zoom effect */
         .scare-container {
-            border: 3px solid #f28b82; /* ChromeOS Warning Red */
+            border: 3px solid #f28b82;
             padding: 40px;
             background: #2d2f31;
             text-align: center;
             border-radius: 8px;
             max-width: 500px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-            animation: pulseZoom 0.3s infinite alternate ease-in-out;
+            animation: pulseZoom 0.25s infinite alternate ease-in-out;
         }
 
         @keyframes pulseZoom {
-            0% { transform: scale(0.9); }
-            100% { transform: scale(1.1); }
+            0% { transform: scale(0.85); }
+            100% { transform: scale(1.15); }
         }
 
         h1 { font-size: 2rem; color: #f28b82; margin: 0 0 15px 0; }
         p { font-size: 1.1rem; color: #e8eaed; line-height: 1.5; }
         
         .btn {
-            background-color: #1a73e8; /* Chrome Blue Button */
+            background-color: #1a73e8;
             color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 500;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 20px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
         .btn:hover { background-color: #1557b0; }
-
-        /* Notification Area on the right side */
-        #notification-zone {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 340px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 9999;
-        }
-
-        /* Looks exactly like a ChromeOS desktop notification tray alert */
-        .fake-toast {
-            background: #2d2f31;
-            color: #e8eaed;
-            border-left: 5px solid #f28b82;
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-            transform: translateX(420px);
-            animation: slideIn 0.25s forwards cubic-bezier(0, 0, 0.2, 1);
-        }
-
-        .fake-toast strong { color: #f28b82; display: block; margin-bottom: 4px; font-size: 0.95rem; }
-        .fake-toast span { font-size: 0.85rem; color: #9aa0a6; }
-
-        @keyframes slideIn {
-            to { transform: translateX(0); }
-        }
     </style>
 </head>
 <body>
 
     <div class="scare-container">
-        <h1>⚠️ ChromeOS Warning ⚠️</h1>
-        <p>Your Chromebook's developer mode has triggered an unverified kernel exception.</p>
-        <p>Click below to verify your Google Account data sync before system wipe.</p>
-        <!-- The button is active right here from the split second the page finishes drawing -->
-        <button class="btn" id="fix-btn">OK, VERIFY SYNC</button>
+        <h1>⚠️ OS Exception 0x3F9 ⚠️</h1>
+        <p>Unverified background processes have breached sandbox isolation protocols.</p>
+        <p>Click below immediately to patch the kernel and restore account sync parameters.</p>
+        <button class="btn" id="start-btn">⚠️ FIX DEVICE NOW</button>
     </div>
 
-    <div id="notification-zone"></div>
-
     <script>
-        const messages = [
-            "Linux development environment corrupted.",
-            "ChromeOS Flex migration initiated automatically.",
-            "Syncing school account passwords to the cloud...",
-            "Warning: High RAM usage from 47 ghost tabs.",
-            "Your trackpad orientation has inverted.",
-            "Error: Chrome cannot read your screen orientation.",
-            "Deleting downloaded files folder (99% complete)...",
-            "Please plug in your charger to slow down the virus."
+        const btn = document.getElementById('start-btn');
+
+        const phrases = [
+            "Syncing local files to server...",
+            "Warning: Device operating at maximum meme capacity.",
+            "Formatting system architecture...",
+            "Downloading illegal pizza recipes...",
+            "Error: Task failed successfully.",
+            "Your wallpaper has been replaced by a potato."
         ];
 
-        const zone = document.getElementById('notification-zone');
-
-        // 1. Start firing notifications down the side IMMEDIATELY on page load
-        setInterval(() => {
-            const toast = document.createElement('div');
-            toast.className = 'fake-toast';
-            
-            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-            toast.innerHTML = `<strong>⚙️ System Notification</strong>${randomMsg}<br><span>Just now • ChromeOS</span>`;
-            
-            zone.appendChild(toast);
-
-            // Keeps the tray tidy so it doesn't run off the bottom of the screen
-            if (zone.children.length > 6) {
-                zone.removeChild(zone.children[0]);
+        // This function handles the loops smoothly without crashing the system
+        function runChaosLoop() {
+            // 1. Fire actual native OS desktop push notifications
+            if ("Notification" in window && Notification.permission === "granted") {
+                setInterval(() => {
+                    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+                    new Notification("🚨 SYSTEM ALERT", {
+                        body: randomPhrase,
+                        icon: "https://google.com"
+                    });
+                }, 400); // Sends a desktop alert card down the side every 400ms
             }
-        }, 500);
 
-        // 2. The Loop Trap
-        function startPopups() {
-            while(true) {
-                alert("🚨 ChromeOS Alert: Click OK to verify you are a human.");
-                alert("🤖 Fact Check: Your Chromebook is currently being powered by a single energetic hamster.");
-                alert("🍪 RANSOMWARE: Send 3 chocolate chip cookies to the principal's office to unlock.");
-                alert("❌ Critical Error: Task failed successfully.");
-            }
+            // 2. Fire continuous popups that loop cleanly without hanging the UI
+            setInterval(() => {
+                alert("🚨 ChromeOS Alert: Click OK to continue doing absolutely nothing.");
+            }, 50); 
         }
 
-        // Triggers instantly if they hit the blue button
-        document.getElementById('fix-btn').addEventListener('click', startPopups);
-
-        // Triggers anyway if they try to click anywhere else to run away
-        document.body.addEventListener('click', (e) => {
-            if (e.target.id !== 'fix-btn') {
-                startPopups();
+        // The trigger event attached directly to the user gesture
+        btn.addEventListener('click', () => {
+            // Ask Chrome for permission to slide actual notifications into the OS panel
+            if ("Notification" in window) {
+                Notification.requestPermission().then(permission => {
+                    // Start everything the instant they select an option or drop into the loop
+                    runChaosLoop();
+                });
+            } else {
+                runChaosLoop();
             }
         });
     </script>
