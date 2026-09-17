@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 CRITICAL SYSTEM ERROR 🚨</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding-top: 15%;
+            overflow: hidden;
+        }
+        .warning-box {
+            border: 5px solid #ff0000;
+            display: inline-block;
+            padding: 30px;
+            background: #111;
+            box-shadow: 0 0 20px #ff0000;
+        }
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        p { font-size: 1.5rem; color: #fff; }
+        .loading { color: #00ff00; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="warning-box">
+        <h1>⚠️ YOUR COMPUTER HAS BEEN INFECTED! ⚠️</h1>
+        <p>A totally real and scary virus is downloading your homework folder...</p>
+        <p class="loading">Progress: <span id="percent">0</span>%</p>
+    </div>
+
+    <script>
+        // 1. Make the percentage counter tick up
+        let count = 0;
+        const counter = setInterval(() => {
+            count++;
+            document.getElementById('percent').innerText = count;
+            if (count >= 100) {
+                document.getElementById('percent').innerText = "100 (Done! format_C:_initiated)";
+                clearInterval(counter);
+            }
+        }, 100);
+
+        // 2. The infinite pop-up trap (The core of the prank)
+        // This triggers as soon as the user clicks anywhere on the page
+        document.body.addEventListener('click', () => {
+            while(true) {
+                alert("Error 404: Brain Not Found.");
+                alert("Deleting System32... just kidding.");
+                alert("Please pay 1 Million cookies to exit.");
+            }
+        });
+    </script>
+</body>
+</html>
