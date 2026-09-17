@@ -3,55 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚨 CRITICAL SYSTEM ERROR 🚨</title>
+    <title>🚨 SYSTEM WARNING: 0x80070005 🚨</title>
     <style>
         body {
-            background-color: #000;
-            color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #004e98; /* Classic Windows Blue Screen color */
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-            padding-top: 15%;
+            padding-top: 10%;
             overflow: hidden;
+            transition: background 0.1s;
         }
-        .warning-box {
-            border: 5px solid #ff0000;
-            display: inline-block;
-            padding: 30px;
-            background: #111;
-            box-shadow: 0 0 20px #ff0000;
+        .warning-container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #fff;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
         }
-        h1 { font-size: 3rem; margin-bottom: 10px; }
-        p { font-size: 1.5rem; color: #fff; }
-        .loading { color: #00ff00; font-weight: bold; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+        .btn {
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .btn:hover { background-color: #cc0000; }
+        
+        /* Flashing effect class added by JS */
+        .flash-red { background-color: #ff0000 !important; }
     </style>
 </head>
 <body>
 
-    <div class="warning-box">
-        <h1>⚠️ YOUR COMPUTER HAS BEEN INFECTED! ⚠️</h1>
-        <p>A totally real and scary virus is downloading your homework folder...</p>
-        <p class="loading">Progress: <span id="percent">0</span>%</p>
+    <div class="warning-container">
+        <h1>⚠️ WINDOWS DEFENDER: THREAT DETECTED ⚠️</h1>
+        <p>Trojan_Spyware.Alert.dll has corrupted your system files.</p>
+        <p>To safely isolate the threat and prevent data loss, please authorize the browser security shield immediately.</p>
+        <button class="btn" id="action-btn">CLICK HERE TO FIX SYSTEM</button>
     </div>
 
     <script>
-        // 1. Make the percentage counter tick up
-        let count = 0;
-        const counter = setInterval(() => {
-            count++;
-            document.getElementById('percent').innerText = count;
-            if (count >= 100) {
-                document.getElementById('percent').innerText = "100 (Done! format_C:_initiated)";
-                clearInterval(counter);
-            }
-        }, 100);
+        const btn = document.getElementById('action-btn');
 
-        // 2. The infinite pop-up trap (The core of the prank)
-        // This triggers as soon as the user clicks anywhere on the page
-        document.body.addEventListener('click', () => {
+        // 1. Flashing background loop to create panic
+        setInterval(() => {
+            document.body.classList.toggle('flash-red');
+        }, 500);
+
+        // 2. The core Prank Event Trigger
+        function triggerPrank() {
+            // Request push notification access aggressively
+            if ("Notification" in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        // Spawn a few funny notifications directly onto their desktop screen
+                        new Notification("🚨 VIRUS ALERT", { body: "Your toaster is now compromised." });
+                        setTimeout(() => {
+                            new Notification("⚠️ SYSTEM FAILURE", { body: "Downloading 40,000 gigabytes of cat memes..." });
+                        }, 1000);
+                    }
+                });
+            }
+
+            // Fall into the infinite popup dialogue trap
             while(true) {
-                alert("Error 404: Brain Not Found.");
-                alert("Deleting System32... just kidding.");
-                alert("Please pay 1 Million cookies to exit.");
+                alert("🚨 CRITICAL WARNING: Click OK to do absolutely nothing.");
+                alert("💻 Progress: 99% complete destroying your high score on Minesweeper.");
+                alert("🍪 RANSOMWARE: Please insert one chocolate chip cookie into your disc drive to unlock.");
+                alert("🔄 Attempting to restart your brain... Error: 404.");
+            }
+        }
+
+        // Trigger if they click the big red button
+        btn.addEventListener('click', triggerPrank);
+
+        // Trigger if they try to click anywhere else on the screen to escape
+        document.body.addEventListener('click', (e) => {
+            if (e.target !== btn) {
+                triggerPrank();
             }
         });
     </script>
