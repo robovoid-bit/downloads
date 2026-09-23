@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Desktop Apps Hub</title>
     <style>
-        /* Modern Minimalist Dark Theme */
+        /* Sleek Modern Blue & Purple Cyber Theme */
         :root {
-            --bg-dark: #121214;
-            --card-bg: #1c1c1e;
-            --accent-color: #ff9f0a;
+            --bg-dark: #0b0c10;
+            --card-bg: #1f2833;
+            --accent-color: #66fcf1;
+            --secondary-accent: #45f3ff;
             --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --btn-hover: #e08b07;
-            --warning-bg: #2c1a1a;
-            --warning-border: #e74c3c;
-            --warning-text: #ff8080;
+            --text-muted: #c5a059;
+            --btn-hover: #1f2833;
+            --warning-bg: #2d1414;
+            --warning-border: #ff4d4d;
+            --warning-text: #ff9999;
         }
 
         * {
@@ -46,10 +47,11 @@
             font-weight: 800;
             margin-bottom: 0.5rem;
             letter-spacing: -0.5px;
+            color: var(--accent-color);
         }
 
         header p {
-            color: var(--text-muted);
+            color: #c5a059;
             font-size: 1.1rem;
         }
 
@@ -66,8 +68,8 @@
             background-color: var(--card-bg);
             border-radius: 16px;
             padding: 1.5rem;
-            border: 1px solid #2c2c2e;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            border: 1px solid #45f3ff;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -77,6 +79,7 @@
         .app-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-color);
+            box-shadow: 0px 0px 15px rgba(102, 252, 241, 0.3);
         }
 
         .app-icon-wrapper {
@@ -88,10 +91,11 @@
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            color: #ffffff;
         }
 
         .app-desc {
-            color: var(--text-muted);
+            color: #ffffff;
             font-size: 0.95rem;
             line-height: 1.5;
             margin-bottom: 1.5rem;
@@ -112,7 +116,7 @@
 
         .app-card:hover .view-btn {
             background-color: var(--accent-color);
-            color: #000;
+            color: #0b0c10;
         }
 
         /* Interactive Installation Modal Overlay Popup */
@@ -140,7 +144,7 @@
 
         .modal-card {
             background-color: var(--card-bg);
-            border: 1px solid #2c2c2e;
+            border: 1px solid #45f3ff;
             border-radius: 24px;
             width: 90%;
             max-width: 550px;
@@ -161,7 +165,7 @@
             right: 1.25rem;
             background: transparent;
             border: none;
-            color: var(--text-muted);
+            color: #c5a059;
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -179,9 +183,10 @@
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 0.75rem;
+            color: var(--accent-color);
         }
 
-        /* Crucial Dynamic Warning Box for Browser False Positives */
+        /* Antivirus Alert Notice Banner */
         .disclaimer-box {
             background-color: var(--warning-bg);
             border: 1px solid var(--warning-border);
@@ -195,19 +200,20 @@
         }
 
         .disclaimer-box strong {
-            color: #ffb3b3;
+            color: #ff9999;
             display: block;
             margin-bottom: 0.25rem;
         }
 
         .modal-features {
             text-align: left;
-            background: #121214;
+            background: #0b0c10;
             padding: 1.25rem;
             border-radius: 12px;
             margin: 1.5rem 0;
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: #ffffff;
+            border: 1px solid #45f3ff;
         }
 
         .modal-features ul {
@@ -232,7 +238,7 @@
         .download-btn {
             display: inline-block;
             background-color: var(--accent-color);
-            color: #000;
+            color: #0b0c10;
             text-decoration: none;
             padding: 1rem 2rem;
             border-radius: 10px;
@@ -243,7 +249,7 @@
         }
 
         .download-btn:hover {
-            background-color: var(--btn-hover);
+            background-color: #45f3ff;
         }
     </style>
 </head>
@@ -286,74 +292,72 @@
             <div class="modal-icon" id="modalIcon">🐶</div>
             <div class="modal-title" id="modalTitle">App Title</div>
             
-            <p id="modalDesc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;"></p>
+            <p id="modalDesc" style="color: #ffffff; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;"></p>
             
             <!-- Antivirus Alert Notice Banner -->
             <div class="disclaimer-box" id="modalDisclaimer" style="display: none;">
                 <strong>⚠️ Antivirus Alert / False Positive Warning:</strong>
-                When trying to download this application, your web browser (like Chrome or Edge) or Windows Defender might block it or flag it as a virus. This is a common false positive because the app is an unsigned standalone custom script compiled into an executable (.exe) file that takes over your overlay space. You will need to click 'Keep' or 'Run Anyway' to load it.
+                When trying to download this application zip package, your web browser (like Chrome or Edge) or Windows Defender might block it or flag it as dangerous. This is a common false positive because the archive contains an unsigned standalone custom script compiled into an executable (.exe) file that captures system-wide overlay positions. You will need to choose 'Keep' or 'Run Anyway' to extract and use it.
             </div>
 
             <div class="modal-features">
-                <strong style="color: white; display:block; margin-bottom: 0.5rem;">Running Instructions & Info:</strong>
+                <strong style="color: var(--accent-color); display:block; margin-bottom: 0.5rem;">Running Instructions & Info:</strong>
                 <ul id="modalFeaturesList">
                     <!-- Loaded dynamically via javascript below -->
                 </ul>
             </div>
 
-            <!-- This link targets your uploaded repository artifacts -->
-            <a href="#" class="download-btn" id="modalDownloadLink" download>Download Independent Package</a>
+            <!-- Download Button targeting the root ZIP asset bundle -->
+            <a href="#" class="download-btn" id="modalDownloadLink" download>Download Package Archive (.zip)</a>
         </div>
     </div>
 
     <script>
-        // Database object tracking individual app manifests inside your GitHub Pages site
-        const appData = {
-            dds: {
-                title: "Desktop Dog Shitters",
-                icon: "🐶",
-desc: "Standalone screen tracking system overlay. Features full real-time mouse activity detection matrices, 3D swirled layout geometry, and audio loops.",
-showDisclaimer: true,
-features: [
-    "Bakes internal bark and fart audio loops natively",
-    "Overlays on absolute monitor heights seamlessly",
-    "Locks execution loops to idle cursor coordinates",
-    "To close the app: You need to click the dog bowl to focus the application, then press the 'ESC' key on your keyboard to completely shut down the window."
-],
-downloadUrl: "desktop dog shitters.exe" // The relative file path inside your github repo
-},
-placeholder: {
-    title: "Future App Deployment Profile",
-    icon: "⚙️",
-    desc: "A structural asset shell prepared for deployment pipelines.",
-    showDisclaimer: false,
-    features: [
-        "Pre-routed download configuration matrix",
-        "CSS frame integrated structural labels",
-        "Ready for upcoming code compilation assets"
-    ],
-    downloadUrl: "#"
-}
+// Database object tracking individual app manifests inside your GitHub Pages site
+const appData = {
+    dds: {
+        title: "Desktop Dog Shitters",
+        icon: "🐶",
+        desc: "Standalone screen tracking system overlay. Features full real-time mouse activity detection matrices, 3D swirled layout geometry, and audio loops.",
+        showDisclaimer: true,
+        features: [
+            "Bakes internal bark and fart audio loops natively",
+            "Overlays on absolute monitor heights seamlessly",
+            "Locks execution loops to idle cursor coordinates",
+            "To close the app: You need to click on the dog bowl at the bottom of the screen to focus the application, then press the 'ESC' key on your keyboard to completely shut down the window."
+        ],
+        downloadUrl: "desktop-dog-shitters.zip" 
+    },
+    placeholder: {
+        title: "Future App Deployment Profile",
+        icon: "⚙️",
+        desc: "A structural asset shell prepared for deployment pipelines.",
+        showDisclaimer: false,
+        features: [
+            "Pre-routed download configuration matrix",
+            "CSS frame integrated structural labels",
+            "Ready for upcoming code compilation assets"
+        ],
+        downloadUrl: "#"
+    }
 };
 
 function openInstaller(appKey) {
     const data = appData[appKey];
     if (!data) return;
-    
+
     document.getElementById('modalTitle').innerText = data.title;
     document.getElementById('modalIcon').innerText = data.icon;
     document.getElementById('modalDesc').innerText = data.desc;
     document.getElementById('modalDownloadLink').href = data.downloadUrl;
-    
-    // Show or hide browser antivirus disclaimer box
+
     const discBox = document.getElementById('modalDisclaimer');
     if (data.showDisclaimer) {
         discBox.style.display = 'block';
     } else {
         discBox.style.display = 'none';
     }
-    
-    // Generate clean structural bullet point arrays dynamically
+
     const list = document.getElementById('modalFeaturesList');
     list.innerHTML = "";
     data.features.forEach(feat => {
@@ -361,7 +365,7 @@ function openInstaller(appKey) {
         li.innerText = feat;
         list.appendChild(li);
     });
-    
+
     document.getElementById('installerModal').classList.add('active');
 }
 
@@ -370,8 +374,7 @@ function hideModal() {
 }
 
 function closeInstaller(event) {
-    // Closes pop-up window automatically if background grey area is selected
-    if (event.target.id === "installerModal") {
+    if(event.target.id === "installerModal") {
         hideModal();
     }
 }
