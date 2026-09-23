@@ -3,108 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚨 ChromeOS Critical Warning 🚨</title>
+    <title>My Desktop Apps Hub</title>
     <style>
-        * { box-sizing: border-box; }
-        body {
-            background-color: #202124;
-            color: #f1f3f4;
-            font-family: 'Roboto', sans-serif, Arial;
+        /* Modern Minimalist Dark Theme */
+        :root {
+            --bg-dark: #121214;
+            --card-bg: #1c1c1e;
+            --accent-color: #ff9f0a;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --btn-hover: #e08b07;
+            --warning-bg: #2c1a1a;
+            --warning-border: #e74c3c;
+            --warning-text: #ff8080;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            overflow: hidden;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* App Cards Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #2c2c2e;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+        }
+
+        .app-icon-wrapper {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-btn {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .app-card:hover .view-btn {
+            background-color: var(--accent-color);
+            color: #000;
+        }
+
+        /* Interactive Installation Modal Overlay Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
 
-        /* Continuous in-and-out full screen zoom effect */
-        .scare-container {
-            border: 3px solid #f28b82;
-            padding: 40px;
-            background: #2d2f31;
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: var(--card-bg);
+            border: 1px solid #2c2c2e;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 550px;
+            padding: 2.5rem;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
             text-align: center;
-            border-radius: 8px;
-            max-width: 500px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-            animation: pulseZoom 0.25s infinite alternate ease-in-out;
         }
 
-        @keyframes pulseZoom {
-            0% { transform: scale(0.85); }
-            100% { transform: scale(1.15); }
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
         }
 
-        h1 { font-size: 2rem; color: #f28b82; margin: 0 0 15px 0; }
-        p { font-size: 1.1rem; color: #e8eaed; line-height: 1.5; }
-        
-        .btn {
-            background-color: #1a73e8;
-            color: white;
+        .close-btn {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 4px;
+            color: var(--text-muted);
+            font-size: 1.5rem;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        .btn:hover { background-color: #1557b0; }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Crucial Dynamic Warning Box for Browser False Positives */
+        .disclaimer-box {
+            background-color: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            color: var(--warning-text);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .disclaimer-box strong {
+            color: #ffb3b3;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-features {
+            text-align: left;
+            background: #121214;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .modal-features ul {
+            list-style-type: none;
+        }
+
+        .modal-features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-features li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -0.5em;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #000;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .download-btn:hover {
+            background-color: var(--btn-hover);
+        }
     </style>
 </head>
 <body>
 
-    <div class="scare-container">
-        <h1>⚠️ OS Exception 0x3F9 ⚠️</h1>
-        <p>Unverified background processes have breached sandbox isolation protocols.</p>
-        <p>Click below immediately to patch the kernel and restore account sync parameters.</p>
-        <button class="btn" id="start-btn">⚠️ FIX DEVICE NOW</button>
+    <header>
+        <h1>My App Engine Portal</h1>
+        <p>Direct standalone desktop toys and application systems built natively in python profiles.</p>
+    </header>
+
+    <!-- Application Dashboard Space -->
+    <div class="app-grid">
+        
+        <!-- App 1 Card: Desktop Dog Shitters -->
+        <div class="app-card" onclick="openInstaller('dds')">
+            <div>
+                <div class="app-icon-wrapper">🐶</div>
+                <div class="app-title">Desktop Dog Shitters</div>
+                <div class="app-desc">An interactive vector overlay simulation. A chaotic digital pug tracks down your inactive cursor positions, dropping layered 3D cartoon messes right over active screen bounds accompanied by random dynamic stereo audio farts.</div>
+            </div>
+            <button class="view-btn">Install Application</button>
+        </div>
+
+        <!-- Placeholder App 2 Card -->
+        <div class="app-card" onclick="openInstaller('placeholder')">
+            <div>
+                <div class="app-icon-wrapper">⚙️</div>
+                <div class="app-title">Future Project Space</div>
+                <div class="app-desc">Your next compiled desktop script execution matrix or configuration module will slot straight in here. Ready for native file serving pipelines.</div>
+            </div>
+            <button class="view-btn">Install Application</button>
+        </div>
+
+    </div>
+
+    <!-- Active Installer Dynamic Modal Configuration Component -->
+    <div class="modal-overlay" id="installerModal" onclick="closeInstaller(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="hideModal()">&times;</button>
+            <div class="modal-icon" id="modalIcon">🐶</div>
+            <div class="modal-title" id="modalTitle">App Title</div>
+            
+            <p id="modalDesc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;"></p>
+            
+            <!-- Antivirus Alert Notice Banner -->
+            <div class="disclaimer-box" id="modalDisclaimer" style="display: none;">
+                <strong>⚠️ Antivirus Alert / False Positive Warning:</strong>
+                When trying to download this application, your web browser (like Chrome or Edge) or Windows Defender might block it or flag it as a virus. This is a common false positive because the app is an unsigned standalone custom script compiled into an executable (.exe) file that takes over your overlay space. You will need to click 'Keep' or 'Run Anyway' to load it.
+            </div>
+
+            <div class="modal-features">
+                <strong style="color: white; display:block; margin-bottom: 0.5rem;">Running Instructions & Info:</strong>
+                <ul id="modalFeaturesList">
+                    <!-- Loaded dynamically via javascript below -->
+                </ul>
+            </div>
+
+            <!-- This link targets your uploaded repository artifacts -->
+            <a href="#" class="download-btn" id="modalDownloadLink" download>Download Independent Package</a>
+        </div>
     </div>
 
     <script>
-        const btn = document.getElementById('start-btn');
+        // Database object tracking individual app manifests inside your GitHub Pages site
+        const appData = {
+            dds: {
+                title: "Desktop Dog Shitters",
+                icon: "🐶",
+desc: "Standalone screen tracking system overlay. Features full real-time mouse activity detection matrices, 3D swirled layout geometry, and audio loops.",
+showDisclaimer: true,
+features: [
+    "Bakes internal bark and fart audio loops natively",
+    "Overlays on absolute monitor heights seamlessly",
+    "Locks execution loops to idle cursor coordinates",
+    "To close the app: You need to click the dog bowl to focus the application, then press the 'ESC' key on your keyboard to completely shut down the window."
+],
+downloadUrl: "desktop dog shitters.exe" // The relative file path inside your github repo
+},
+placeholder: {
+    title: "Future App Deployment Profile",
+    icon: "⚙️",
+    desc: "A structural asset shell prepared for deployment pipelines.",
+    showDisclaimer: false,
+    features: [
+        "Pre-routed download configuration matrix",
+        "CSS frame integrated structural labels",
+        "Ready for upcoming code compilation assets"
+    ],
+    downloadUrl: "#"
+}
+};
 
-        const phrases = [
-            "Syncing local files to server...",
-            "Warning: Device operating at maximum meme capacity.",
-            "Formatting system architecture...",
-            "Downloading illegal pizza recipes...",
-            "Error: Task failed successfully.",
-            "Your wallpaper has been replaced by a potato."
-        ];
+function openInstaller(appKey) {
+    const data = appData[appKey];
+    if (!data) return;
+    
+    document.getElementById('modalTitle').innerText = data.title;
+    document.getElementById('modalIcon').innerText = data.icon;
+    document.getElementById('modalDesc').innerText = data.desc;
+    document.getElementById('modalDownloadLink').href = data.downloadUrl;
+    
+    // Show or hide browser antivirus disclaimer box
+    const discBox = document.getElementById('modalDisclaimer');
+    if (data.showDisclaimer) {
+        discBox.style.display = 'block';
+    } else {
+        discBox.style.display = 'none';
+    }
+    
+    // Generate clean structural bullet point arrays dynamically
+    const list = document.getElementById('modalFeaturesList');
+    list.innerHTML = "";
+    data.features.forEach(feat => {
+        const li = document.createElement('li');
+        li.innerText = feat;
+        list.appendChild(li);
+    });
+    
+    document.getElementById('installerModal').classList.add('active');
+}
 
-        // This function handles the loops smoothly without crashing the system
-        function runChaosLoop() {
-            // 1. Fire actual native OS desktop push notifications
-            if ("Notification" in window && Notification.permission === "granted") {
-                setInterval(() => {
-                    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-                    new Notification("🚨 SYSTEM ALERT", {
-                        body: randomPhrase,
-                        icon: "https://google.com"
-                    });
-                }, 400); // Sends a desktop alert card down the side every 400ms
-            }
+function hideModal() {
+    document.getElementById('installerModal').classList.remove('active');
+}
 
-            // 2. Fire continuous popups that loop cleanly without hanging the UI
-            setInterval(() => {
-                alert("🚨 ChromeOS Alert: Click OK to continue doing absolutely nothing.");
-            }, 50); 
-        }
-
-        // The trigger event attached directly to the user gesture
-        btn.addEventListener('click', () => {
-            // Ask Chrome for permission to slide actual notifications into the OS panel
-            if ("Notification" in window) {
-                Notification.requestPermission().then(permission => {
-                    // Start everything the instant they select an option or drop into the loop
-                    runChaosLoop();
-                });
-            } else {
-                runChaosLoop();
-            }
-        });
-    </script>
-</body>
-</html>
+function closeInstaller(event) {
+    // Closes pop-up window automatically if background grey area is selected
+    if (event.target.id === "installerModal") {
+        hideModal();
+    }
+}
